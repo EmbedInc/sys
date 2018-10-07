@@ -1,0 +1,21 @@
+//   Creates the BUILDDATE.INS.PAS include file.  This file defines the
+//   Pascal constant BUILD_DTM_STR as the date/time string for the current
+//   time.
+//
+var new t time = [now]
+var new s string
+
+writepush "builddate.ins.pas"
+
+write "{   Pascal-readable date/time information"
+write "}"
+write "const"
+set s ""
+set s [str s [date t local dwk]] //day of week
+set s [str s " " [date t local d]]
+set s [str s " " [date t local mon]]
+set s [str s " " [date t local year]]
+set s [str s " " [date t local hour] ":" [date t local min]]
+write "  build_dtm_str = '" s "';"
+
+writepop

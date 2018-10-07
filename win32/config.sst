@@ -1,0 +1,104 @@
+/*   SST back end cofiguration file for the following environment:
+/*
+/*     IBM PC or compatible with Intel 386 or later processor running any
+/*     operating system that supports the Microsoft Win32 API.  Mircrosoft
+/*     Visual C++ compiler, version 2.0 or later
+/*
+bits_adr 8                             /* number of bits in one machine address
+/*
+/*   Declare the available integers on the target machine thru the target
+/*   compiler.
+/*
+size_int 1 "char"
+size_int 2 "short"
+size_int 4 "int"
+size_int_adr 4                         /* size of integer to hold machine address
+size_int_machine 4                     /* size of "convenient" integer
+univ_pointer "void *"                  /* name of universal pointer data type
+/*
+/*   Declare the available floating point numbers on the target machine
+/*   thru the target compiler.
+/*
+size_float 4 float
+size_float 8 double
+size_float_machine 4                   /* size of "convenient" floating point number
+size_float_single 4                    /* size of "single precision" floating point
+size_float_double 8                    /* size of "double precision" floating point
+
+size_boolean 1 "unsigned char"         /* size used for standard boolean data type
+bits_char 8 "unsigned char"            /* bits storage used for one character
+pass_val_size_max 8                    /* max size arg that can be passed by value
+align_min_rec 1                        /* minimum aligment for non-packed records
+align_min_packed_rec 4                 /* minimum aligment for packed records
+
+os WIN32                               /* target operating system name
+language C                             /* target language name
+suffix_file_name .c                    /* mandatory output file name suffix
+max_symbol_len 32                      /* max allowed output source symbol length
+case lower                             /* use lower case for symbol names
+suffix_data_type _t                    /* suffix for all data type symbol names
+suffix_constant _k                     /* suffix for all constant symbol names
+/*
+/*   Declare reserved names in the output language.  These names will be
+/*   avoided by all non-intrinsic symbols.
+/*
+/*   These symbols are reserved because the back ends assumes it can use them,
+/*   not because they are special to C.
+/*
+reserved true                          /* boolean value for TRUE, = 1
+reserved false                         /* boolean value for FALSE, = 0
+reserved nil                           /* null pointer value, = 0
+reserved nullset                       /* empty set value, = 0
+reserved stdout                        /* standard I/O stream names
+reserved stdin
+reserved stderr
+/*
+/*   Intrinsic functions that the back end assumes it may use at any time.
+/*   No user symbols of these names may be created to avoid redefining them.
+/*
+reserved floor
+reserved log
+/*
+/*   The following names are absolutely reserved.  They can not be re-defined.
+/*
+reserved auto
+reserved break
+reserved case
+reserved char
+reserved const
+reserved continue
+reserved default
+reserved do
+reserved double
+reserved else
+reserved enum
+reserved extern
+reserved float
+reserved for
+reserved goto
+reserved if
+reserved int
+reserved long
+reserved register
+reserved return
+reserved short
+reserved signed
+reserved sizeof
+reserved static
+reserved struct
+reserved switch
+reserved typedef
+reserved union
+reserved unsigned
+reserved void
+reserved volatile
+reserved while
+/*
+/*   Microsoft extensions that need to be avoided.
+/*
+reserved dllexport
+reserved dllimport
+reserved far
+reserved naked
+reserved near
+reserved thread
