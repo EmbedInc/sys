@@ -58,6 +58,8 @@ const
   sys_stat_timeout_k = 11;             {timeout occurred}
   sys_stat_timestr_bad_k = 12;         {bad time string}
   sys_stat_menuid_bad_k = 13;          {illegal or unexpected menu ID}
+  sys_stat_no_mem_k = 14;              {memory not allocated}
+  sys_stat_no_mxrec_k = 15;            {no MX records found}
 
 type
 {
@@ -111,6 +113,32 @@ type
 
   string_var_p_t =                     {pointer to arbitrary variable length string}
     ^string_var_arg_t;
+
+const
+  util_mem_list_size_k = 15;           {number of mem blocks per list record}
+
+type
+  util_mem_list_p_t = ^util_mem_list_t;
+  util_mem_list_t = record             {one list on mem blocks lists chain}
+    next_p: util_mem_list_p_t;         {pointer to next list in chain}
+    list:                              {block start addresses}
+      array[1..util_mem_list_size_k] of univ_ptr;
+    end;
+
+  util_mem_context_p_t = ^util_mem_context_t;
+  util_mem_context_t = record          {data about one memory list context}
+    lock: sys_sys_threadlock_t;        {single thread lock for this data structure}
+    parent_p: util_mem_context_p_t;    {pointer to parent context}
+    prev_sib_p: util_mem_context_p_t;  {pointer to previous sibling context}
+    next_sib_p: util_mem_context_p_t;  {pointer to next sibling context}
+    child_p: util_mem_context_p_t;     {pointer to first subordinate context}
+    first_list_p: util_mem_list_p_t;   {pointer to start of mem blocks lists chain}
+    n_in_first: sys_int_machine_t;     {number of blocks in first chain entry}
+    pool_size: sys_int_adr_t;          {total size of each memory pool region}
+    max_pool_chunk: sys_int_adr_t;     {max size for taking mem from pool}
+    pool_p: univ_ptr;                  {start adr of available region in curr pool}
+    pool_left: sys_int_adr_t;          {memory left in current pool}
+    end;
 {
 **********************************************************************
 *
@@ -386,6 +414,22 @@ sys_msg_dtype_fp2_k: (                 {double precision floating point}
     sys_menu_desk_user_k,              {on the "desktop" for the current user}
     sys_menu_progs_all_k,              {normal menu for programs visible to all users}
     sys_menu_progs_user_k);            {normal menu for programs visible to current user}
+
+  sys_mxrec_p_t = ^sys_mxrec_t;
+  sys_mxrec_t = record                 {info about one mail exchange server for a domain}
+    prev_p: sys_mxrec_p_t;             {pointer to next more preferred server in list}
+    next_p: sys_mxrec_p_t;             {pointer to next less preferred server in list}
+    name_p: string_var_p_t;            {points to the machine name}
+    pref: sys_int_conv16_t;            {preference, lower values more preferred}
+    ttl: sys_int_conv32_t;             {remaining time for this record valid, seconds}
+    end;
+
+  sys_mxdom_t = record                 {mail exchange data for a domain}
+    mem_p: util_mem_context_p_t;       {pointer to mem context all data allocated under}
+    n: sys_int_machine_t;              {number of machine names in the list}
+    list_p: sys_mxrec_p_t;             {pointer to chain of MX records, most to least preferred}
+    end;
+  sys_mxdom_p_t = ^sys_mxdom_t;
 {
 *   Entry points.
 }
@@ -832,6 +876,13 @@ procedure sys_msg_parm_real (          {floating parameter to msg parms array}
   out     msg_parm: sys_parm_msg_t;    {message parameter array entry to fill in}
   in      r: real);                    {data for parameter}
   extern;                              {no VAL_PARAM, needs address of R}
+
+procedure sys_mx_lookup (              {find mail exchange servers for a domain}
+  in out  mem: util_mem_context_t;     {parent mem context, will make subordinate context}
+  in      domain: univ string_var_arg_t; {domain name}
+  out     mxdom_p: sys_mxdom_p_t;      {pointer to returned data}
+  out     stat: sys_err_t);            {completion status, no mem allocated on error}
+  val_param; extern;
 
 procedure sys_node_id (                {return unique ID string for this machine}
   in out  s: univ string_var_arg_t);   {returned node ID string}

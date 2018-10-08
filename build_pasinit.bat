@@ -5,13 +5,13 @@ rem
 set srcdir=sys
 set buildname=
 
-call src_get sys sys.ins.pas
-call src_get sys sys_sys.ins.pas
-call src_get sys sys2.ins.pas
-call src_get sys sys_sys2.ins.pas
-call src_get sys sys_mem.ins.pas
-call src_get sys sys_subsys_resolve.ins.pas
-call src_get sys base.ins.pas
+call src_get %srcdir% %srcdir%.ins.pas
+call src_get %srcdir% %srcdir%_sys.ins.pas
+call src_get %srcdir% %srcdir%2.ins.pas
+call src_get %srcdir% %srcdir%_sys2.ins.pas
+call src_get %srcdir% %srcdir%_mem.ins.pas
+call src_get %srcdir% %srcdir%_subsys_resolve.ins.pas
+call src_get %srcdir% base.ins.pas
 
 call src_getfrom util util.ins.pas
 call src_getfrom string string.ins.pas

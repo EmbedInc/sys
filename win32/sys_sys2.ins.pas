@@ -886,6 +886,40 @@ type
       array [1..20] of luid_and_attr_t; {may be any length array at least N long}
     end;
   token_privileges_p_t = ^token_privileges_t;
+{
+*   DNS constants and structures.
+}
+  dns_rectype_k_t = win_word_t (
+    dns_rectype_a_k = 1,               {A record, address of a host}
+    dns_rectype_mx_k = 15);            {MX record, name of mail server for domain}
+
+  dns_opt_k_t = win_dword_t (          {option flags to DnsQuery}
+    dns_opt_nocache_k = 3,             {don't use cache}
+    dns_opt_cache_k = 4);              {only use cache}
+  dns_opts_t = set of bitsize bits_win_dword_k eletype dns_opt_k_t;
+
+  dns_rec_p_t = ^dns_rec_t;
+  dns_rec_t = record                   {one DNS record}
+    next_p: dns_rec_p_t;               {pointer to next DNS record in list}
+    name_p: win_string_p_t;            {name of host this record is for}
+    rectype: dns_rectype_k_t;          {type of DNS record, A rec, MX rec, etc}
+    len: win_word_t;                   {byte size of variable part of record}
+    flags: win_dword_t;                {collection of 1-bit flags}
+    ttl: win_dword_t;                  {time to live, seconds}
+    unused: win_dword_t;
+    case dns_rectype_k_t of
+dns_rectype_a_k: (
+      a_ipadr: win_dword_t;            {IP-4 address, low to high byte order}
+      );
+dns_rectype_mx_k: (
+      mx_name_p: win_string_p_t;       {pointer to host name}
+      mx_pref: win_word_t;             {preference distance, lower is more preferred}
+      mx_unused: win_word_t;
+      );
+    end;
+
+  dns_free_k_t = win_dword_t (         {options for dealocating DNS records}
+    dns_free_list_k = 1);              {deallocate the whole list}
 
 var (sys2)                             {defined in SYS_SYS_ERR.PAS}
   wsa_started: boolean := false;       {TRUE if WSAStartup already called}
@@ -1228,6 +1262,21 @@ function bind (                        {bind a name to an existing socket}
   in      namelen: sys_int_adr_t)      {number of bytes in NAME}
   :sys_int_machine_t;                  {0 on success, use WSAGetLastError on fail}
   val_param; extern;
+
+procedure DnsFree (                    {deallocate records returned by DnsQuery}
+  in val  rec_p: dns_rec_p_t;          {pointer to structure to deallocate}
+  in val  free_type: dns_free_k_t);
+  extern;
+
+function DnsQuery_A (
+  in      name: univ win_path_t;       {domain name, NULL terminated}
+  in val  rectype: dns_rectype_k_t;    {type of record to look up}
+  in val  options: dns_opts_t;         {option flags}
+  in val  extra: univ_ptr;             {not used, set to NIL}
+  out     rec_p: dns_rec_p_t;          {pointer to returned data}
+  in val  res: univ_ptr)               {reserved, set to NIL}
+  :sys_sys_err_t;                      {completion status code}
+  extern;
 
 function closesocket (                 {close connection to a network port}
   in      socket: socketid_t)          {ID of socket to close}

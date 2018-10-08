@@ -1,5 +1,0 @@
-{   Main line of decent.  This assumes everything is being run thru the
-*   translator anyway, and that there are therfore no differences between
-*   the .pas and .cog versions.
-}
-%include '/cognivision_links/dsee_libs/sys/sys_sys2.ins.pas';

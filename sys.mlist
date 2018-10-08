@@ -45,6 +45,7 @@ sys_msg_parm_int.obj
 sys_msg_parm_fp1.obj
 sys_msg_parm_fp2.obj
 sys_msg_parm_real.obj
+sys_mxlookup.obj
 sys_order_flip.obj
 sys_process.obj
 sys_read_env_global.obj

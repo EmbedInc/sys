@@ -44,6 +44,12 @@ msg err12
 msg err13
   lan english -def
     Menu ID of %p1i is not supported.
+msg err14
+  lan english -def
+    Unable to allocate dynamic memory.
+msg err15
+  lan english -def
+    No MX record found for domain %p1s.
 /*
 /*   The error status codes 100-132 are reserved to correspond to the 0-32
 /*   return values of ShellExecute.

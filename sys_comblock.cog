@@ -1,7 +1,0 @@
-{   Defines all the common blocks in this library.
-}
-module sys_comblock;
-%include '/cognivision_links/dsee_libs/sys/sys2.ins.pas';
-
-define sys_common;
-define sys_common2;
