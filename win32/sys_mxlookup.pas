@@ -2,6 +2,7 @@
 }
 module sys_mxlookup;
 define sys_mx_lookup;
+define sys_mx_dealloc;
 %include 'sys2.ins.pas';
 %include 'sys_sys2.ins.pas';
 %include 'string.ins.pas';
@@ -144,4 +145,27 @@ leave:                                 {common exit point}
   if sysdata_p <> nil then begin       {system MX data allocated ?}
     DnsFree (sysdata_p, dns_free_list_k);
     end;
+  end;
+{
+********************************************************************************
+*
+*   Subroutine SYS_MX_DEALLOC (MXDOM_P)
+*
+*   Deallocate the data returned by SYS_MX_LOOKUP.  MXDOM_P is the pointer to
+*   the MX records returned by SYS_MX_LOOKUP.  The data being pointed to will be
+*   deallocated, and MXDOM_P will be returned NIL.
+}
+procedure sys_mx_dealloc (             {deallocate result of MX lookup}
+  in out  mxdom_p: sys_mxdom_p_t);     {pointer to MX lookup result, returned NIL}
+  val_param;
+
+var
+  mem_p: util_mem_context_p_t;         {pointer to mem context for the allocated data}
+
+begin
+  if mxdom_p = nil then return;        {nothing to do ?}
+
+  mem_p := mxdom_p^.mem_p;             {get pointer to the private memory context}
+  util_mem_context_del (mem_p);        {delete the private memory context}
+  mxdom_p := nil;                      {invalidate the caller's pointer}
   end;

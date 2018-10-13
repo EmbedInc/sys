@@ -877,6 +877,10 @@ procedure sys_msg_parm_real (          {floating parameter to msg parms array}
   in      r: real);                    {data for parameter}
   extern;                              {no VAL_PARAM, needs address of R}
 
+procedure sys_mx_dealloc (             {deallocate result of MX lookup}
+  in out  mxdom_p: sys_mxdom_p_t);     {pointer to MX lookup result, returned NIL}
+  val_param; extern;
+
 procedure sys_mx_lookup (              {find mail exchange servers for a domain}
   in out  mem: util_mem_context_t;     {parent mem context, will make subordinate context}
   in      domain: univ string_var_arg_t; {domain name}
