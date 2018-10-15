@@ -59,7 +59,7 @@ begin
   string_terminate_null (dom);         {ensure local copy is NULL-terminated}
 
   stat.sys := DnsQuery_A (             {look up MX record}
-    domain.str,                        {domain name to look up}
+    dom.str,                           {domain name to look up}
     dns_rectype_mx_k,                  {look up MX record}
     [],                                {set of options}
     nil,                               {unused}
