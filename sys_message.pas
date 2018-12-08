@@ -1,4 +1,4 @@
-{   Subroutine SYS_MESSAGE (SUBSYS,MSG)
+{   Subroutine SYS_MESSAGE (SUBSYS, MSG)
 *
 *   Write message.  SUBSYS is the subsystem name to which the message belongs.
 *   MSG is the name of the particular message within that subsystem.  The message

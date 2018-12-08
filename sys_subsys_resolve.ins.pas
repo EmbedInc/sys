@@ -68,3 +68,4 @@
 -61: string_appends (subsys_v, 'emcan');
 -62: string_appends (subsys_v, 'escr');
 -63: string_appends (subsys_v, 'email');
+-64: string_appends (subsys_v, 'utest');

@@ -2,14 +2,20 @@
 *
 *   Write message from message file to standard output.  SUBSYS is the name of
 *   the subsystem the message is coming from.  The message file name will be
-*   <subsys>.msg.  MSG is the name of the specific message within the message
-*   file indicated by SUBSYS.  PARMS is an array of pointers to parameters
-*   whos values can be inserted into the message.  The parameters are referenced
-*   by special commands in the message text.  The data types of the parameters
-*   must match with those expected by the special commands in the message text.
+*   <subsys>.msg.  In the special case where SUBSYS is the empty string or all
+*   blank, the message file unique to the current program is assumed.  The
+*   message file name will be <programname>_prog.msg.
+*
+*   MSG is the name of the specific message within the message file.
+*
+*   PARMS is an array of pointers to parameters whos values can be inserted into
+*   the message.  The parameters are referenced by special commands in the
+*   message text.  The data types of the parameters must match with those
+*   expected by the special commands in the message text.
+*
 *   N_PARMS is the number of parameters referenced by PARMS.
 }
-module sys_MESSAGE_PARMS;
+module sys_message_parms;
 define sys_message_parms;
 %include 'sys2.ins.pas';
 %include 'string.ins.pas';
@@ -72,6 +78,11 @@ begin
 
   string_vstring (gnam, subsys, sizeof(subsys)); {get generic message file name}
   string_unpad (gnam);                 {delete trailing blanks}
+  if gnam.len = 0 then begin           {use default message file name ?}
+    string_progname (gnam);            {make message file name from program name}
+    string_appends (gnam, '_prog'(0));
+    end;
+
   string_vstring (msg_name, msg, sizeof(msg)); {get name of message within file}
   string_unpad (msg_name);             {delete trailing blanks}
   printed := false;                    {not printed new message yet}
