@@ -70,3 +70,5 @@
 -63: string_appends (subsys_v, 'email');
 -64: string_appends (subsys_v, 'utest');
 -65: string_appends (subsys_v, 'j1test');
+-66: string_appends (subsys_v, 'jcan');
+-67: string_appends (subsys_v, 'jowags');
