@@ -939,9 +939,9 @@ procedure sys_run_shell (              {run command as if entered to shell}
 procedure sys_run_stdtalk (            {run prog, get handles to standard streams}
   in      cmline: univ string_var_arg_t; {prog pathname and command line arguments}
   out     proc: sys_sys_proc_id_t;     {system ID of new process}
-  out     stdin: sys_sys_iounit_t;     {program's standard input stream handle}
-  out     stdout: sys_sys_iounit_t;    {program's standard output stream handle}
-  out     stderr: sys_sys_iounit_t;    {program's standard error stream handle}
+  out     stdin: sys_sys_file_conn_t;  {program's standard input stream handle}
+  out     stdout: sys_sys_file_conn_t; {program's standard output stream handle}
+  out     stderr: sys_sys_file_conn_t; {program's standard error stream handle}
   out     stat: sys_err_t);            {returned error status}
   val_param; extern;
 

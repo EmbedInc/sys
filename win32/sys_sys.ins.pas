@@ -41,7 +41,9 @@ type
   sys_sys_err_t = integer32;           {format of system's error status code}
 
   sys_sys_iounit_t = int32u_t;         {native system I/O unit identifier (handle)}
+  sys_sys_iounit_p_t = ^sys_sys_iounit_t;
   sys_sys_file_conn_t = int32u_t;      {native file connection handle}
+  sys_sys_file_conn_p_t = ^sys_sys_file_conn_t;
   sys_sys_proc_id_t = int32u_t;        {system process ID (handle)}
   sys_sys_thread_id_t = int32u_t;      {thread handle}
   sys_sys_event_id_t = int32u_t;       {handle to event we can wait on (handle)}

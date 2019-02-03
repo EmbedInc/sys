@@ -203,8 +203,6 @@ begin
   envval.max := size_char(envval.str);
   sys_error_none (stat);               {init to no error occurred}
 
-  %debug; writeln ('SYS_RUN: ', cmline.str:cmline.len);
-
   n_close := 0;                        {init to no handles to close at end}
   string_t_c (cmline, cline, cline_max_k); {copy command line to system format}
   proc_us_h := GetCurrentProcess;      {get pseudo-handle to our process}
@@ -290,12 +288,10 @@ sys_procio_talk_k: begin
     nil,                               {no security attributes specified}
     0);                                {use default buffer size}
   if ok = win_bool_false_k then begin
-    %debug; writeln ('  Error on create STDIN pipe.');
     goto syerr;
     end;
   procstart.stdin := handle_inheritable (h);
   if procstart.stdin = handle_none_k then begin
-    %debug; writeln ('  Error on duplicate STDIN pipe handle.');
     goto syerr;
     end;
   remember_close (procstart.stdin);
@@ -307,12 +303,10 @@ sys_procio_talk_k: begin
     nil,                               {no security attributes specified}
     0);                                {use default buffer size}
   if ok = win_bool_false_k then begin
-    %debug; writeln ('  Error on create STDOUT pipe.');
     goto syerr;
     end;
   procstart.stdout := handle_inheritable (h);
   if procstart.stdout = handle_none_k then begin
-    %debug; writeln ('  Error on duplicate STDOUT pipe handle.');
     goto syerr;
     end;
   remember_close (procstart.stdout);
@@ -324,12 +318,10 @@ sys_procio_talk_k: begin
     nil,                               {no security attributes specified}
     0);                                {use default buffer size}
   if ok = win_bool_false_k then begin
-    %debug; writeln ('  Error on create STDERR pipe.');
     goto syerr;
     end;
   procstart.stderr := handle_inheritable (h);
   if procstart.stderr = handle_none_k then begin
-    %debug; writeln ('  Error on duplicate STDERR pipe handle.');
     goto syerr;
     end;
   remember_close (procstart.stderr);
@@ -375,7 +367,6 @@ otherwise
     procstart,                         {new process startup info}
     procinfo);                         {returned info about new process and thread}
   if ok = win_bool_false_k then begin  {didn't create new process ?}
-    %debug; writeln ('  Error on call to CreateProcessA.');
 syerr:                                 {jump here on system error encountered}
     stat.sys := GetLastError;          {save error code}
     goto leave;
@@ -390,7 +381,6 @@ leave:                                 {common exit point}
     discard( CloseHandle (close_list[n_close]) );
     n_close := n_close - 1;            {one less handle left to close}
     end;
-  %debug; writeln ('  Returning from SYS_RUN.');
   end;
 {
 **********************************************************************
