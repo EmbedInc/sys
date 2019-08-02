@@ -17,6 +17,7 @@ const
   sys_fp_ieee32_native_k = true;       {machine can directly express IEEE 32 bit FP}
   sys_fp_ieee64_native_k = true;       {machine can directly express IEEE 64 bit FP}
   sys_threadmem_k = sys_threadmem_share_k; {our thread memory handling scheme}
+  sys_fnam_case = false;               {file names are not case-sensitive}
 {
 *   Constants for the IDs of the standard streams.
 }
