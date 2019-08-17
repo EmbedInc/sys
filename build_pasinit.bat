@@ -4,6 +4,9 @@ rem   Set up for building a Pascal module.
 rem
 call build_vars
 
+call src_get %srcdir% config.sst
+copya config.sst /e/lib/config_sst
+
 call src_get %srcdir% %srcdir%.ins.pas
 call src_get %srcdir% %srcdir%_sys.ins.pas
 call src_get %srcdir% %srcdir%2.ins.pas
