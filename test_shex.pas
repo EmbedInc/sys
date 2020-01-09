@@ -7,7 +7,10 @@
 *   content.
 }
 program test_shex;
-%include '(cog)lib/base.ins.pas';
+%include 'sys.ins.pas';
+%include 'util.ins.pas';
+%include 'string.ins.pas';
+%include 'file.ins.pas';
 
 var
   parm:                                {command line parameter}

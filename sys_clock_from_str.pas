@@ -1,7 +1,7 @@
 module sys_clock_from_str;
 define sys_clock_from_str;
-%include '(cog)source/sys/sys2.ins.pas';
-%include '(cog)lib/string.ins.pas';
+%include 'sys2.ins.pas';
+%include 'string.ins.pas';
 {
 ********************************************************************************
 *

@@ -2,7 +2,7 @@
 }
 module sys_inetadr;
 define sys_inetadr_local;
-%include '(cog)lib/sys2.ins.pas';
+%include 'sys2.ins.pas';
 {
 ********************************************************************************
 *
