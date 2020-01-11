@@ -83,4 +83,5 @@ copya %libname%.h (cog)lib/%libname%.h
 copya %libname%.ins.pas (cog)lib/%libname%.ins.pas
 copya %libname%_sys.ins.pas (cog)lib/%libname%_sys.ins.pas
 copya %libname%_sys2.ins.pas (cog)lib/%libname%_sys2.ins.pas
-copya base.ins.pas (cog)lib/base.ins.pas
+call src_get %srcdir% base_public.ins.pas
+copya base_public.ins.pas (cog)lib/base.ins.pas

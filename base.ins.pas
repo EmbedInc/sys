@@ -1,7 +1,8 @@
-{   This include file references the include files for all the base
-*   libraries required by most programs.
+{   Include file that references all the "base" minimum requied libraries for
+*   building Embed software.  This version is for grabbing by build scripts
+*   directly from this repository.
 }
-%include '(cog)lib/sys.ins.pas';
-%include '(cog)lib/util.ins.pas';
-%include '(cog)lib/string.ins.pas';
-%include '(cog)lib/file.ins.pas';
+%include 'sys.ins.pas';
+%include 'util.ins.pas';
+%include 'string.ins.pas';
+%include 'file.ins.pas';
