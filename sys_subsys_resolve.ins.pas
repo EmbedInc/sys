@@ -73,3 +73,4 @@
 -66: string_appends (subsys_v, 'jcan');
 -67: string_appends (subsys_v, 'jowags');
 -68: string_appends (subsys_v, 'displ');
+-69: string_appends (subsys_v, 'hier');
