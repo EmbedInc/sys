@@ -960,6 +960,12 @@ function AllocConsole                  {create console and attach to std streams
   :win_bool_t;                         {WIN_BOOL_FALSE_K with GetLastError on err}
   extern;
 
+function CancelIoEx (                  {cancel I/O operation in progress}
+  in      handle: win_handle_t;        {handle I/O operation in progress on}
+  in      overlap: overlap_p_t)        {pointer to overlap structure, if used}
+  :win_bool_t;                         {WIN_BOOL_FALSE_K with GetLastError on err}
+  val_param; extern;
+
 function ClearCommError (              {clear error on comm line and re-enable I/O}
   in      handle: win_handle_t;        {handle to open I/O connection}
   out     err: commerr_t;              {returned set of error flags}
