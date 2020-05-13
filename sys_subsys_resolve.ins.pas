@@ -75,4 +75,4 @@
 -68: string_appends (subsys_v, 'displ');
 -69: string_appends (subsys_v, 'hier');
 -70: string_appends (subsys_v, 'mdev');
--71: string_appends (subyss_v, 'strflex');
+-71: string_appends (subsys_v, 'strflex');
