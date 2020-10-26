@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <process.h>
 
-/******************************************************
+/*******************************************************************************
 **
 **   Subroutine SYS_SYS_EXIT (EXSTAT)
 **
@@ -21,7 +21,22 @@ __declspec(dllexport) void sys_sys_exit (int exstat) {
   exit (exstat);
   }
 
-/******************************************************
+/*******************************************************************************
+**
+**   Subroutine SYS_FLUSH_STDOUT
+**
+**   Flush all buffered data of the standard output streams (STDOUT, STDERR).
+**   This causes the data to by physically written immediately.  This flushes
+**   any buffered output data in both the C runtime library and any underlying
+**   operating system buffer.
+*/
+__declspec(dllexport) void sys_flush_stdout (void) {
+
+  fflush (stdout);
+  fflush (stderr);
+  }
+
+/*******************************************************************************
 **
 **   Subroutine SYS_SYS_STDOUT_NOBUF
 **
@@ -35,7 +50,7 @@ __declspec(dllexport) void sys_sys_stdout_nobuf (void) {
   setvbuf (stderr, 0, _IONBF, 0);      /* try to disable STDERR buffering */
   }
 
-/******************************************************
+/*******************************************************************************
 **
 **   Subroutine SYS_SYS_STDOUT_FIX
 **

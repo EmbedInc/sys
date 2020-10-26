@@ -734,6 +734,9 @@ procedure sys_exit_n (                 {exit quietly with specific exit status c
 procedure sys_exit_true;               {exit quietly, indicate TRUE condition}
   options (extern, noreturn);
 
+procedure sys_flush_stdout;            {write any STDOUT and STDERR buffered data now}
+  val_param; extern;
+
 function sys_fp_from_ieee32 (          {convert from IEEE 32 bit FP number}
   in      ival: sys_fp_ieee32_t)       {IEEE 32 bit floating point input value}
   :sys_fp_max_t;                       {returned native floating point value}
