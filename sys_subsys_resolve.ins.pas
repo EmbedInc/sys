@@ -78,3 +78,4 @@
 -71: string_appends (subsys_v, 'strflex');
 -72: string_appends (subsys_v, 'code');
 -73: string_appends (subsys_v, 'fline');
+-74: string_appends (subsys_v, 'pntcalc');
