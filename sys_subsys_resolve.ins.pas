@@ -12,7 +12,7 @@
  -5: string_appends (subsys_v, 'img');
  -6: string_appends (subsys_v, 'math');
  -7: string_appends (subsys_v, 'pginfo');
- -8: string_appends (subsys_v, 'syn');
+ -8: string_appends (subsys_v, 'syo');
  -9: string_appends (subsys_v, 'rend');
 -10: string_appends (subsys_v, 'video');
 -11: string_appends (subsys_v, 'sst');
@@ -79,3 +79,4 @@
 -72: string_appends (subsys_v, 'code');
 -73: string_appends (subsys_v, 'fline');
 -74: string_appends (subsys_v, 'pntcalc');
+-75: string_appends (subsys_v, 'syn');
