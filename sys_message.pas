@@ -13,7 +13,7 @@ define sys_message;
 
 procedure sys_message (                {write message to user}
   in      subsys: string;              {name of subsystem, used to find message file}
-  in      msg: string);                {message name withing subsystem file}
+  in      msg: string);                {message name within subsystem file}
 
 begin
   sys_message_parms (subsys, msg, nil, 0); {message without parameters}

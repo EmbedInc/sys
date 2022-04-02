@@ -57,7 +57,7 @@ function sys_ftn_width_stdout_         {return character width of standard outpu
 
 procedure sys_message_ (               {write message to stdout}
   in      subsys: univ sys_ftn_char_t; {name of subsystem, used to find message file}
-  in      msg: univ sys_ftn_char_t;    {message name withing subsystem file}
+  in      msg: univ sys_ftn_char_t;    {message name within subsystem file}
   in      subsys_len: sys_ftn_char_len_t; {length of subsystem name - hidden argument}
   in      msg_len: sys_ftn_char_len_t); {length of message name - hidden argument}
   val_param; extern;
@@ -221,7 +221,7 @@ begin
 
 procedure sys_message_ (               {write message to stdout}
   in      subsys: univ sys_ftn_char_t; {name of subsystem, used to find message file}
-  in      msg: univ sys_ftn_char_t;    {message name withing subsystem file}
+  in      msg: univ sys_ftn_char_t;    {message name within subsystem file}
   in      subsys_len: sys_ftn_char_len_t; {length of subsystem name - hidden argument}
   in      msg_len: sys_ftn_char_len_t); {length of message name - hidden argument}
   val_param;

@@ -41,7 +41,7 @@ var
 type
   dstype_k_t = (                       {daylight savings time trigger strategies}
     dstype_dmon_k,                     {at given day within given month}
-    dstype_dwmon_k);                   {at Nth occurence of weekday withing month}
+    dstype_dwmon_k);                   {at Nth occurence of weekday within month}
 
   daysave_trig_t = record              {daylight savings time trigger descriptor}
     dstype: dstype_k_t;                {trigger type}

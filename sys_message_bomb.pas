@@ -8,7 +8,7 @@ define sys_message_bomb;
 
 procedure sys_message_bomb (           {write message and abort program with error}
   in      subsys: string;              {name of subsystem, used to find message file}
-  in      msg: string;                 {message name withing subsystem file}
+  in      msg: string;                 {message name within subsystem file}
   in      parms: univ sys_parm_msg_ar_t; {array of parameter descriptors}
   in      n_parms: sys_int_machine_t); {number of parameters in PARMS}
   options (val_param, noreturn);

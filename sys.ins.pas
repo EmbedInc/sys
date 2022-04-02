@@ -833,19 +833,19 @@ procedure sys_menu_entry_del (         {delete system menu entry}
 
 procedure sys_message (                {write message to user}
   in      subsys: string;              {name of subsystem, used to find message file}
-  in      msg: string);                {message name withing subsystem file}
+  in      msg: string);                {message name within subsystem file}
   extern;
 
 procedure sys_message_bomb (           {write message and abort program with error}
   in      subsys: string;              {name of subsystem, used to find message file}
-  in      msg: string;                 {message name withing subsystem file}
+  in      msg: string;                 {message name within subsystem file}
   in      parms: univ sys_parm_msg_ar_t; {array of parameter descriptors}
   in      n_parms: sys_int_machine_t); {number of parameters in PARMS}
   options (val_param, extern, noreturn);
 
 procedure sys_message_parms (          {write message with parameters from caller}
   in      subsys: string;              {name of subsystem, used to find message file}
-  in      msg: string;                 {message name withing subsystem file}
+  in      msg: string;                 {message name within subsystem file}
   in      parms: univ sys_parm_msg_ar_t; {array of parameter descriptors}
   in      n_parms: sys_int_machine_t); {number of parameters in PARMS}
   val_param; extern;
