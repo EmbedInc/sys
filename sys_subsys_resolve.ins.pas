@@ -80,3 +80,4 @@
 -73: string_appends (subsys_v, 'fline');
 -74: string_appends (subsys_v, 'pntcalc');
 -75: string_appends (subsys_v, 'syn');
+-76: string_appends (subsys_v, 'menu');
