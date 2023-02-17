@@ -81,3 +81,4 @@
 -74: string_appends (subsys_v, 'pntcalc');
 -75: string_appends (subsys_v, 'syn');
 -76: string_appends (subsys_v, 'menu');
+-77: string_appends (subsys_v, 'eagle');
