@@ -82,3 +82,4 @@
 -75: string_appends (subsys_v, 'syn');
 -76: string_appends (subsys_v, 'menu');
 -77: string_appends (subsys_v, 'eagle');
+-78: string_appends (subsys_v, 'part');
