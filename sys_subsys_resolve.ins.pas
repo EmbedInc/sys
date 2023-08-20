@@ -84,3 +84,4 @@
 -77: string_appends (subsys_v, 'eagle');
 -78: string_appends (subsys_v, 'part');
 -79: string_appends (subsys_v, 'db25');
+-80: string_appends (subsys_v, 'dongsim');
