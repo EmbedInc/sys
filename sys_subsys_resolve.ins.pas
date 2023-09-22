@@ -85,4 +85,4 @@
 -78: string_appends (subsys_v, 'part');
 -79: string_appends (subsys_v, 'db25');
 -80: string_appends (subsys_v, 'dongsim');
--81: string_appends (subsys_v, 'rescal');
+-81: string_appends (subsys_v, 'jrescal');
