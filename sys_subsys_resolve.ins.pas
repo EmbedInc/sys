@@ -86,3 +86,4 @@
 -79: string_appends (subsys_v, 'db25');
 -80: string_appends (subsys_v, 'dongsim');
 -81: string_appends (subsys_v, 'jrescal');
+-82: string_appends (subsys_v, 'canmux');
