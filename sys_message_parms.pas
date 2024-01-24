@@ -76,15 +76,7 @@ begin
       end;
     end;
 
-  string_vstring (gnam, subsys, sizeof(subsys)); {get generic message file name}
-  string_unpad (gnam);                 {delete trailing blanks}
-  if gnam.len = 0 then begin           {use default message file name ?}
-    string_progname (gnam);            {make message file name from program name}
-    string_appends (gnam, '_prog'(0));
-    end;
-
-  string_vstring (msg_name, msg, sizeof(msg)); {get name of message within file}
-  string_unpad (msg_name);             {delete trailing blanks}
+  sys_message_resolve (subsys, msg, gnam, msg_name); {resolve subsys and msg names}
   printed := false;                    {not printed new message yet}
   if (gnam.len <= 0) or (msg_name.len <= 0) then goto leave; {nothing to print ?}
 

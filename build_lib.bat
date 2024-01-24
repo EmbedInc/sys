@@ -56,6 +56,7 @@ call src_c   %srcdir% %libname%_sys_menu_c %1
 call src_pas %srcdir% %libname%_message %1
 call src_pas %srcdir% %libname%_message_bomb %1
 call src_pas %srcdir% %libname%_message_parms %1
+call src_pas %srcdir% %libname%_message_resolve %1
 call src_pas %srcdir% %libname%_msg_parm_vstr %1
 call src_pas %srcdir% %libname%_msg_parm_str %1
 call src_pas %srcdir% %libname%_msg_parm_int %1

@@ -39,6 +39,7 @@ sys_mem_error.obj
 sys_message.obj
 sys_message_bomb.obj
 sys_message_parms.obj
+sys_message_resolve.obj
 sys_msg_parm_vstr.obj
 sys_msg_parm_str.obj
 sys_msg_parm_int.obj

@@ -850,6 +850,13 @@ procedure sys_message_parms (          {write message with parameters from calle
   in      n_parms: sys_int_machine_t); {number of parameters in PARMS}
   val_param; extern;
 
+procedure sys_message_resolve (        {resolve full absolute subsystem and message names}
+  in      subsys: string;              {subsystem name, default is <progname>_prog}
+  in      msg: string;                 {[subsys] message-name}
+  in out  subsv: univ string_var_arg_t; {returned subsystem name}
+  in out  msgv: univ string_var_arg_t); {returned message name within subsystem}
+  val_param; extern;
+
 procedure sys_msg_parm_vstr (          {add var string parameter to msg parms array}
   out     msg_parm: sys_parm_msg_t;    {message parameter array entry to fill in}
   in      s: univ string_var_arg_t);   {data for parameter}
