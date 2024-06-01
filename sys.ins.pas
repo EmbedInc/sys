@@ -36,7 +36,7 @@ type
     sys_threadmem_share_k,             {all threads within proc share address space}
     sys_threadmem_copy_k);             {each thread gets copy of parent memory}
 
-%include '(cog)lib/sys_sys.ins.pas';
+%include 'sys_sys.ins.pas';
 
 const
   sys_err_t_max_parms = 4;             {max parameters stored in SYS_ERR_T}

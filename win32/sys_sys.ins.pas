@@ -80,3 +80,7 @@ type
     second: int16u_t;                  {0-59 second within minute}
     msec: int16u_t;                    {0-999 milliseconds within second}
     end;
+
+  file_map_handle_t = record           {user handle to a mapped region of a file}
+    unused: char;
+    end;

@@ -12,7 +12,6 @@ call src_get sys sys.instop.pas
 sst sys.instop.pas -show_unused 0 -local_ins -write_all -uname sys
 rename sys.instop.c sys.h
 
-
 call src_pas %srcdir% %libname%_beep %1
 call src_pas %srcdir% %libname%_bomb %1
 call src_pas %srcdir% %libname%_clock_sys %1
@@ -83,6 +82,4 @@ call src_msg %srcdir% %libname%
 copya %libname%.h (cog)lib/%libname%.h
 copya %libname%.ins.pas (cog)lib/%libname%.ins.pas
 copya %libname%_sys.ins.pas (cog)lib/%libname%_sys.ins.pas
-copya %libname%_sys2.ins.pas (cog)lib/%libname%_sys2.ins.pas
-call src_get %srcdir% base_public.ins.pas
-copya base_public.ins.pas (cog)lib/base.ins.pas
+copya base.ins.pas (cog)lib/base.ins.pas

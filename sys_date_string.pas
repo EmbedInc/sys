@@ -7,7 +7,7 @@ define sys_clock_str2;
 define sys_date_time1;
 define sys_date_time2;
 define sys_date_time3;
-%include '(cog)source/sys/sys2.ins.pas';
+%include 'sys2.ins.pas';
 %include 'string.ins.pas';
 
 var

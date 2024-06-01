@@ -1,6 +1,5 @@
-{   Include file that references all the "base" minimum requied libraries for
-*   building Embed software.  This version is for grabbing by build scripts
-*   directly from this repository.
+{   Include file that references all the "base" minimum required libraries for
+*   building Embed software.
 }
 %include 'sys.ins.pas';
 %include 'util.ins.pas';
