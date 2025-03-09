@@ -290,14 +290,14 @@ otherwise
 *   implemented.  All these, when implemented, would go in this section.
 }
   trig_day.dstype := dstype_dwmon_k;   {trigger on Nth occurrence of weekday}
-  trig_day.dwmon_mon := 3;             {April}
-  trig_day.dwmon_n := 1;               {first occurrence}
+  trig_day.dwmon_mon := 2;             {April}
+  trig_day.dwmon_n := 2;               {second occurrence}
   trig_day.dwmon_dweek := 0;           {Sunday}
   trig_day.dwmon_min := 120;           {2:00 hours}
 
   trig_std.dstype := dstype_dwmon_k;   {trigger on Nth occurrence of weekday}
-  trig_std.dwmon_mon := 9;             {October}
-  trig_std.dwmon_n := -1;              {last occurrence}
+  trig_std.dwmon_mon := 10;            {November}
+  trig_std.dwmon_n := 1;               {first occurrence}
   trig_std.dwmon_dweek := 0;           {Sunday}
   trig_std.dwmon_min := 120;           {2:00 hours}
 {
