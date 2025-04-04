@@ -88,3 +88,4 @@
 -81: string_appends (subsys_v, 'jrescal');
 -82: string_appends (subsys_v, 'canmux');
 -83: string_appends (subsys_v, 's5lib');
+-84: string_appends (subsys_v, 'jowasdc');
