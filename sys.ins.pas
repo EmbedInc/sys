@@ -693,6 +693,14 @@ procedure sys_event_notify_cnt (       {notify (trigger) a counted system event}
   in      n: sys_int_machine_t);       {number of times to notify the event}
   val_param; extern;
 
+procedure sys_event_reset_bool (       {reset Boolean event to not triggered}
+  in out  id: sys_sys_event_id_t);     {handle to event to trigger}
+  val_param; extern;
+
+procedure sys_event_reset_cnt (        {reset counted event to not triggered}
+  in out  id: sys_sys_event_id_t);     {handle to event to trigger}
+  val_param; extern;
+
 procedure sys_event_wait (             {wait indefinitely on a single event}
   in out  event: sys_sys_event_id_t;   {the event to wait on}
   out     stat: sys_err_t);            {returned error status}

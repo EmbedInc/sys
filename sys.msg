@@ -180,6 +180,12 @@ msg event_notify_bool
 msg event_notify_cnt
   lan english -def
     Error on attempt to notify counted event object.
+msg event_reset_bool
+  lan english -def
+    Error on attempt to reset Boolean event object.
+msg event_reset_cnt
+  lan english -def
+    Error on attempt to reset counted event object.
 msg fpmode_get
   lan english -def
     Error occurred on attempt to get current floating point handling

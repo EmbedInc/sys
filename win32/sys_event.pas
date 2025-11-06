@@ -9,13 +9,15 @@ define sys_event_del_bool;
 define sys_event_del_cnt;
 define sys_event_notify_bool;
 define sys_event_notify_cnt;
+define sys_event_reset_bool;
+define sys_event_reset_cnt;
 define sys_event_wait_any;
 define sys_event_wait;
 define sys_event_wait_tout;
 %include 'sys2.ins.pas';
 %include 'sys_sys2.ins.pas';
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_create_bool (      {create a Boolean (on/off) system event}
   out     id: sys_sys_event_id_t);     {system event handle, initialized to OFF}
@@ -32,7 +34,7 @@ begin
     end;
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_create_cnt (       {create a counted event (semiphore)}
   out     id: sys_sys_event_id_t);     {system event handle, initialized to no event}
@@ -49,7 +51,7 @@ begin
     end;
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_del_bool (         {delete a Boolean system event}
   in out  id: sys_sys_event_id_t);     {handle to event to delete}
@@ -59,7 +61,7 @@ begin
   discard( CloseHandle (id) );         {close handle to the event object}
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_del_cnt (          {delete a counted system event}
   in out  id: sys_sys_event_id_t);     {handle to event to delete}
@@ -69,7 +71,7 @@ begin
   discard( CloseHandle (id) );         {close handle to the semaphore object}
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_notify_bool (      {notify (trigger) a Boolean system event}
   in out  id: sys_sys_event_id_t);     {handle to event to trigger}
@@ -85,7 +87,7 @@ begin
     end;
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_notify_cnt (       {notify (trigger) a counted system event}
   in out  id: sys_sys_event_id_t;      {handle to event to trigger}
@@ -106,7 +108,49 @@ begin
     end;
   end;
 {
-**********************************************************************
+********************************************************************************
+}
+procedure sys_event_reset_bool (       {reset Boolean event to not triggered}
+  in out  id: sys_sys_event_id_t);     {handle to event to trigger}
+  val_param;
+
+var
+  ok: win_bool_t;
+
+begin
+  ok := ResetEvent (id);               {reset the event}
+  if ok = win_bool_false_k then begin  {system call failed ?}
+    sys_sys_error_bomb ('sys', 'event_reset_bool', nil, 0);
+    end;
+  end;
+{
+********************************************************************************
+}
+procedure sys_event_reset_cnt (        {reset counted event to not triggered}
+  in out  id: sys_sys_event_id_t);     {handle to event to trigger}
+  val_param;
+
+var
+  donewait: donewait_k_t;              {reason wait completed}
+  stat: sys_err_t;                     {error status}
+
+begin
+  while true do begin                  {loop until semiphore no longer signalled}
+    donewait := WaitForSingleObject (  {wait for semiphore signalled or timeout}
+      id,                              {handle of semiphore to wait on}
+      0);                              {0 timeout, return immediately either way}
+    if donewait = donewait_signaled_k then next; {was signalled, try again ?}
+    end;
+
+  if donewait = donewait_failed_k then begin {hard error ?}
+    sys_error_none (stat);
+    stat.sys := GetLastError;
+    sys_error_print (stat, 'sys', 'event_reset_cnt', nil, 0);
+    sys_bomb;
+    end;
+  end;
+{
+********************************************************************************
 }
 procedure sys_event_wait_any (         {wait for any event in list to trigger}
   in out  events: sys_event_list_t;    {list of events to wait on}
@@ -156,7 +200,7 @@ otherwise
     end;                               {end of DONEWAIT cases}
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 function sys_event_wait_tout (         {wait for single event or timeout}
   in out  event: sys_sys_event_id_t;   {the event to wait on}
@@ -196,7 +240,7 @@ otherwise
     end;
   end;
 {
-**********************************************************************
+********************************************************************************
 }
 procedure sys_event_wait (             {wait indefinitely on a single event}
   in out  event: sys_sys_event_id_t;   {the event to wait on}
