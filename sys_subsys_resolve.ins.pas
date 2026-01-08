@@ -91,3 +91,5 @@
 -84: string_appends (subsys_v, 'jowasdc');
 -85: string_appends (subsys_v, 'aglite');
 -86: string_appends (subsys_v, 'jowa');
+-87: string_appends (subsys_v, 'mmcom');
+-88: string_appends (subsys_v, 'mmdsp');
