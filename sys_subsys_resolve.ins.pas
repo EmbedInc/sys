@@ -93,3 +93,4 @@
 -86: string_appends (subsys_v, 'jowa');
 -87: string_appends (subsys_v, 'mmcom');
 -88: string_appends (subsys_v, 'mmdsp');
+-89: string_appends (subsys_v, 'rdy2');
