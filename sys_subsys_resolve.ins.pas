@@ -94,3 +94,4 @@
 -87: string_appends (subsys_v, 'mmcom');
 -88: string_appends (subsys_v, 'mmdsp');
 -89: string_appends (subsys_v, 'rdy2');
+-90: string_appends (subsys_v, 'geld');
