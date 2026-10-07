@@ -1,5 +1,6 @@
 sys_beep.obj
 sys_bomb.obj
+sys_clk.obj
 sys_clock_from_str.obj
 sys_clock_sys.obj
 sys_envvar.obj

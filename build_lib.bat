@@ -14,6 +14,7 @@ rename sys.instop.c sys.h
 
 call src_pas %srcdir% %libname%_beep %1
 call src_pas %srcdir% %libname%_bomb %1
+call src_pas %srcdir% %libname%_clk %1
 call src_pas %srcdir% %libname%_clock_sys %1
 call src_pas %srcdir% %libname%_envvar %1
 call src_pas %srcdir% %libname%_error %1

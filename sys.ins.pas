@@ -360,6 +360,28 @@ sys_msg_dtype_fp2_k: (                 {double precision floating point}
     rel: boolean;                      {TRUE for relative time value}
     end;
   sys_clock_p_t = ^sys_clock_t;
+{
+*   Small seconds time descriptor.  This format is for when storage space is a
+*   high priority, and one second resolution is acceptable.  It only holds
+*   absolute time values as 32 bit unsigned integer seconds since the start of
+*   year 2000.  The range is about 136.2 years, from 2000 to 2136.
+*
+*   This format is for storage only.  There are no routines to manipulate it
+*   directly other than to convert to and from the full SYS_CLOCK_T format
+*   described above.
+}
+  sys_clksec32_t = int32u_t;           {time in seconds since start of year 2000}
+{
+*   Small minutes time descriptor.  This format is for when storage space is a
+*   high priority, and one minute resolution is acceptable.  It only holds
+*   absolute time values as 32 bit signed integer minutes since the start of
+*   year 2000.  The range is about +-4086 years, from 2086 BC to 6086.
+*
+*   This format is for storage only.  There are no routines to manipulate it
+*   directly other than to convert to and from the full SYS_CLOCK_T format
+*   described above.
+}
+  sys_clkmin32_t = sys_int_conv32_t;   {time in minutes offset from start of year 2000}
 
   sys_tzone_k_t = (                    {mnemonics to identify particular time zones}
     sys_tzone_cut_k,                   {coordinated universal time}
@@ -460,6 +482,16 @@ function sys_clock_compare (           {compare two clock values}
   :sys_compare_k_t;                    {less / equal / greater comparison result}
   val_param; extern;
 
+function sys_clock_from_clkmin32 (     {CLKMIN32 time to absolute clock value}
+  in      clk: sys_clkmin32_t)         {input time in CLKMIN32 minutes format}
+  :sys_clock_t;                        {returned clock descriptor}
+  val_param; extern;
+
+function sys_clock_from_clksec32 (     {CLKSEC32 time to absolute clock value}
+  in      clk: sys_clksec32_t)         {input time in CLKSEC32 seconds format}
+  :sys_clock_t;                        {returned clock descriptor}
+  val_param; extern;
+
 function sys_clock_from_date (         {return absolute clock value from a date}
   in      date: sys_date_t)            {input date descriptor}
   :sys_clock_t;                        {clock value resulting from the input date}
@@ -506,6 +538,16 @@ procedure sys_clock_str2 (             {make date string YYYY/MM/DD.hh:mm:ss.xxx
   in      clock: sys_clock_t;          {clock time to convert to string}
   in      nsf: sys_int_machine_t;      {number of seconds fraction digits}
   in out  str: univ string_var_arg_t); {returned date/time string}
+  val_param; extern;
+
+function sys_clock_to_clkmin32 (       {abs clock value to CLKMIN32 format}
+  in      clock: sys_clock_t)          {full clock value}
+  :sys_clkmin32_t;                     {returned time in CLKMIN32 format}
+  val_param; extern;
+
+function sys_clock_to_clksec32 (       {abs clock value to CLKSEC32 format}
+  in      clock: sys_clock_t)          {full clock value}
+  :sys_clksec32_t;                     {returned time in CLKSEC32 format}
   val_param; extern;
 
 procedure sys_clock_to_date (          {make expanded date from absolute clock value}
