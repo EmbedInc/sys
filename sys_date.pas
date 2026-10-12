@@ -389,9 +389,18 @@ var
 
 begin
   date.tzone_id := tzone;              {save time zone ID}
-  date.hours_west := hours_west;       {set timezone hours west of coor univ time}
   date.daysave := daysave;             {init daylight savings time strategy}
   date.daysave_on := false;            {init to daylight savings time not in effect}
+
+  case tzone of                        {which time zone to convert to ?}
+sys_tzone_cut_k: date.hours_west := 0.0;
+sys_tzone_east_usa_k: date.hours_west := 5.0;
+sys_tzone_cent_usa_k: date.hours_west := 6.0;
+sys_tzone_mount_usa_k: date.hours_west := 7.0;
+sys_tzone_pacif_usa_k: date.hours_west := 8.0;
+otherwise                              {not a recognized time zone}
+    date.hours_west := hours_west;     {use explicitly supplied hours offset}
+    end;
 
   sec := s - (date.hours_west * sec_hour); {offset to raw time zone}
 {
@@ -473,7 +482,7 @@ begin
   date.second := trunc(sec);
   date.sec_frac := sec - date.second;
 {
-*   The time in DATE is for the standard time of the timzone.  Modify it for
+*   The time in DATE is for the standard time of the timezone.  Modify it for
 *   daylight savings time if appropriate.  If so, the time is changed and the
 *   HOURS_WEST field updated accordingly.
 }
