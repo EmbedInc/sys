@@ -1,6 +1,7 @@
 {   Collection of routines that convert to/from date descriptors.
 }
 module sys_date;
+define sys_date_hours_west;
 define sys_date_to_sec;
 define sys_date_from_sec;
 define sys_clock_from_date;
@@ -290,7 +291,7 @@ otherwise
 *   implemented.  All these, when implemented, would go in this section.
 }
   trig_day.dstype := dstype_dwmon_k;   {trigger on Nth occurrence of weekday}
-  trig_day.dwmon_mon := 2;             {April}
+  trig_day.dwmon_mon := 2;             {March}
   trig_day.dwmon_n := 2;               {second occurrence}
   trig_day.dwmon_dweek := 0;           {Sunday}
   trig_day.dwmon_min := 120;           {2:00 hours}
@@ -311,6 +312,29 @@ otherwise
 
   hwest := hw + hwd;                   {return adjusted hours west}
   dayon := true;                       {indicate daysave adjustment applied to HWEST}
+  end;
+{
+********************************************************************************
+*
+*   Function SYS_DATE_HOURS_WEST (DATE)
+*
+*   Find the hours west of CUT for the indicated local date/time.  DATE must be
+*   properly filled in valid values.  Daylight savings time, when enabled
+*   according to date, is taken into account in determining the hours offset
+*   from CUT.
+}
+function sys_date_hours_west (         {find hours west of CUT}
+  in      date: sys_date_t)            {local date/time, daysave strategy filled in}
+  :real;                               {hours west of CUT, daysave taken into account}
+  val_param;
+
+var
+  hwest: real;                         {hours west of CUT}
+  dayon: boolean;                      {daylight savings time is in effect}
+
+begin
+  daysave_check (date, hwest, dayon);  {find hour west, daysave on/off}
+  sys_date_hours_west := hwest;        {return hours west of CUT}
   end;
 {
 ********************************************************************************

@@ -600,6 +600,11 @@ procedure sys_date_from_sec (          {make expanded date from absolute seconds
   out     date: sys_date_t);           {completely filled in date descriptor}
   val_param; extern;
 
+function sys_date_hours_west (         {find hours west of CUT}
+  in      date: sys_date_t)            {local date/time, daysave strategy filled in}
+  :real;                               {hours west of CUT, daysave taken into account}
+  val_param; extern;
+
 procedure sys_date_string (            {make string for part of a complete date}
   in      date: sys_date_t;            {describes the complete date}
   in      string_id: sys_dstr_k_t;     {identifies which string, use SYS_DSTR_xxx_K}

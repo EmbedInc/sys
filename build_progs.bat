@@ -1,6 +1,6 @@
 @echo off
 rem
-rem   BUILD_PROGS [-dbg]
+rem   BUILD_PROGS
 rem
 rem   Build the executable programs from this source directory.
 rem
@@ -8,7 +8,7 @@ setlocal
 call build_pasinit
 
 call src_progl test_date -nolib
-call src_progl test_date_time1 -nolib
+call src_progl test_date_time1
 call src_progl test_env
 call src_progl test_exit_error
 call src_progl test_exit_ok

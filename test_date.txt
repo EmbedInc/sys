@@ -1,0 +1,78 @@
+                         Embed program TEST_DATE
+                             6 November 2026
+
+test_date [options]
+
+Program to test various date handling functions in the SYS library.
+
+An expanded date/time is converted to absolute seconds, then converted
+back.  Various intermediate results are shown.
+
+By default, the starting time is the current time.
+
+The command line options are:
+
+  -Y2K
+
+    Set the starting time to the start of year 2000, coordinated universal
+    time.  This is the internal reference time for 0 absolute seconds.
+
+  -Y year
+
+    Set the year of the starting time.
+
+  -MO month
+
+    Set the 1-N month of the starting time.
+
+  -D day
+
+    Set the 1-N day within the month of the starting time.
+
+  -H hour
+
+    Set the 0-N hours into the day of the starting time.
+
+  -MIN minute
+
+    Set the 0-N minutes into the hour of the starting time.
+
+  -S isec
+
+    Set the 0-N integer seconds into the minute of the starting time.
+
+  -SF fpsec
+
+    Set the additional fractional seconds into the minute of the starting
+    time.
+
+  -TZ timezone
+
+    Set the time zone the starting time will be interpreted within.
+    TIMEZONE must be one of the following:
+
+      CUT
+
+        Coordinated Universal Time (Greenwich mean time).
+
+      EST
+      EDT
+      CST
+      CDT
+      MST
+      MDT
+      PST
+      PDT
+
+        One of the standard time zones in 48 states of the USA.  For
+        example, EST is Eastern Standard Time.  An "S" in the middle
+        refers to standard time, and "D" to daylight savings time.  A "D"
+        time zone allows daylight savings time when it would normally be.
+        It does not force daylight savings time all year.  An "S" time
+        always prohibits shifting to daylight savings time.
+
+      OTHER hourswest
+
+        An arbitrary time zone.  HOURSWEST is the hours west of
+        coordinated universal time.  HOURWEST is used directly.  No
+        daylight savings time shift will be applied.

@@ -1,23 +1,6 @@
 {   Program TEST_DATE [options]
 *
-*   Test ability to convert between a date descriptor and a time in absolute
-*   seconds from the zero reference time (start of the year 2000).
-*
-*   The command line arguments are used to describe a date.  The default date
-*   is the zero reference time.  The command line options can modify this date.
-*
-*   Valid command line options are:
-*
-*   -Y <year>
-*   -MO <month>
-*   -D <day>
-*   -H <hour>
-*   -MIN <minute>
-*   -S <integer seconds>
-*   -SF <FP seconds>
-*   -TZ <time zone>
-*     Time zone names are: CUT, EST, CST, MST, PST
-*     The default is the current time zone.
+*   Program to test various date/time handling features.
 }
 program test_date;
 %include 'sys.ins.pas';
@@ -28,10 +11,6 @@ const
   max_msg_parms = 11;                  {max parameters we can pass to a message}
 
 var
-  opt,                                 {command line option name}
-  parm, parm2:                         {command line option parameters}
-    %include '(cog)lib/string16.ins.pas';
-  pick: sys_int_machine_t;             {number of token picked from list}
   date: sys_date_t;                    {date descriptor}
   sec: double;                         {seconds from reference time}
   fp2: double;                         {scratch FP2 number}
@@ -39,6 +18,12 @@ var
   tzone: sys_tzone_k_t;                {saved time zone info}
   hours_west: real;
   daysave: sys_daysave_k_t;
+
+  opt:                                 {command line option name}
+    %include '(cog)lib/string16.ins.pas';
+  parm, parm2:                         {command line option parameters}
+    %include '(cog)lib/string132.ins.pas';
+  pick: sys_int_machine_t;             {number of token picked from list}
   msg_parm:                            {parameter references for messages}
     array[1..max_msg_parms] of sys_parm_msg_t;
   stat: sys_err_t;
@@ -47,15 +32,14 @@ label
   next_opt, parm_err, done_opts;
 
 begin
-  date.year := 2000;                   {set default date values}
-  date.month := 0;
-  date.day := 0;
-  date.hour := 0;
-  date.minute := 0;
-  date.second := 0;
-  date.sec_frac := 0.0;
-  sys_timezone_here (date.tzone_id, date.hours_west, date.daysave);
-  date.daysave_on := false;
+  sys_timezone_here (tzone, hours_west, daysave); {get current time zone parameters}
+
+  sys_clock_to_date (                  {init to current time and timezone}
+    sys_clock,                         {current time}
+    tzone,                             {time zone ID}
+    hours_west,                        {hours west of CUT, for undefined time zones}
+    daysave,                           {daylight savings time enabled/disabled}
+    date);                             {returned expanded date/time}
 
   string_cmline_init;                  {init for command line processing}
 
@@ -65,7 +49,7 @@ next_opt:                              {back here each new command line option}
   sys_error_abort (stat, 'string', 'cmline_opt_err', nil, 0);
   string_upcase (opt);                 {make upper case for token matching}
   string_tkpick80 (opt,
-    '-Y -MO -D -H -MIN -S -SF -TZ',
+    '-Y -MO -D -H -MIN -S -SF -TZ -Y2K',
     pick);
   case pick of                         {which command line option was it ?}
 {
@@ -123,36 +107,58 @@ next_opt:                              {back here each new command line option}
   string_append (opt, parm);
   string_upcase (parm2);               {make upper case for token matching}
   string_tkpick80 (parm2,
-    'OTHER CUT EST CST MST PST',
+    'OTHER CUT EST EDT CST CDT MST MDT PST PDT',
     pick);
-  date.daysave := sys_daysave_appl_k;  {init to daylight savings time used this zone}
+  date.daysave := sys_daysave_no_k;    {daylight savings time to disabled}
   case pick of
-1:  begin
+1:  begin                              {OTHER hourswest}
       date.tzone_id := sys_tzone_other_k;
-      date.daysave := sys_daysave_no_k;
       string_cmline_token_fp2 (fp2, stat);
       if sys_error(stat) then goto parm_err;
       date.hours_west := fp2;
       end;
-2:  begin
+2:  begin                              {CUT}
       date.tzone_id := sys_tzone_cut_k;
       date.hours_west := 0.0;
       end;
-3:  begin
+3:  begin                              {EST}
       date.tzone_id := sys_tzone_east_usa_k;
       date.hours_west := 5.0;
       end;
-4:  begin
+4:  begin                              {EDT}
+      date.tzone_id := sys_tzone_east_usa_k;
+      date.hours_west := 5.0;
+      date.daysave := sys_daysave_appl_k;
+      end;
+
+5:  begin                              {CST}
       date.tzone_id := sys_tzone_cent_usa_k;
       date.hours_west := 6.0;
       end;
-5:  begin
+6:  begin                              {CDT}
+      date.tzone_id := sys_tzone_cent_usa_k;
+      date.hours_west := 6.0;
+      date.daysave := sys_daysave_appl_k;
+      end;
+
+7:  begin                              {MST}
       date.tzone_id := sys_tzone_mount_usa_k;
       date.hours_west := 7.0;
       end;
-6:  begin
+8:  begin                              {MDT}
+      date.tzone_id := sys_tzone_mount_usa_k;
+      date.hours_west := 7.0;
+      date.daysave := sys_daysave_appl_k;
+      end;
+
+9:  begin                              {PST}
       date.tzone_id := sys_tzone_pacif_usa_k;
       date.hours_west := 8.0;
+      end;
+10: begin                              {PDT}
+      date.tzone_id := sys_tzone_pacif_usa_k;
+      date.hours_west := 8.0;
+      date.daysave := sys_daysave_appl_k;
       end;
 otherwise
     sys_msg_parm_vstr (msg_parm[1], parm2);
@@ -160,6 +166,22 @@ otherwise
     sys_message_bomb ('string', 'cmline_parm_bad', msg_parm, 2);
     end;
   end;                                 {end of -TZ command line option case}
+{
+*   -Y2K
+}
+9: begin
+  date.year := 2000;
+  date.month := 0;
+  date.day := 0;
+  date.hour := 0;
+  date.minute := 0;
+  date.second := 0;
+  date.sec_frac := 0.0;
+  date.hours_west := 0.0;
+  date.tzone_id := sys_tzone_cut_k;
+  date.daysave := sys_daysave_no_k;
+  date.daysave_on := false;
+  end;
 {
 *   Unrecognized command line option.
 }
@@ -174,6 +196,11 @@ done_opts:                             {all done with command line options}
 {
 *   All done processing the command line options.
 *
+*   Show the starting time.
+}
+  string_f_date1 (parm, date, 2);      {make date/time string}
+  writeln (parm.str:parm.len);         {show it}
+{
 *   Convert the input date to absolute time and print the result.
 }
   sec := sys_date_to_sec(date);        {convert input date to absolute seconds}
@@ -182,6 +209,8 @@ done_opts:                             {all done with command line options}
 {
 *   Convert the absolute time to its date and print the results.
 }
+  writeln;
+
   tzone := date.tzone_id;              {save time zone parameters}
   hours_west := date.hours_west;
   daysave := date.daysave;
@@ -224,10 +253,15 @@ otherwise string_vstring (opt, 'ON', 2);
 
   sys_message_parms ('sys', 'test_date1', msg_parm, 11);
   sys_message_parms ('sys', 'test_date2', msg_parm, 11);
+
+  string_f_fp_fixed (parm, sys_date_hours_west(date), 1);
+  writeln ('Time zone is ', parm.str:parm.len, ' hours west of CUT.');
 {
 *   Convert the date back to an abolute time and print the results to verify
 *   that the time wasn't altered.
 }
+  writeln;
+
   sec := sys_date_to_sec(date);        {convert input date to absolute seconds}
   sys_msg_parm_fp2 (msg_parm[1], sec);
   sys_message_parms ('sys', 'test_date_sec', msg_parm, 1);
