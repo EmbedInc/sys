@@ -523,6 +523,14 @@ function sys_clock_from_sys_rel (      {make clock value from relative system ti
   :sys_clock_t;                        {returned Cognivision time descriptor}
   val_param; extern;
 
+function sys_clock_hours_west (        {find hours west of CUT}
+  in      clock: sys_clock_t;          {absolute time to find hours west of}
+  in      tzone: sys_tzone_k_t;        {time zone ID}
+  in      hours_west: real;            {for OTHER tz, hours west of CUT without DST}
+  in      daysave: sys_daysave_k_t)    {daylight savings time strategy}
+  :real;                               {hours west of CUT for the specific time and zone}
+  val_param; extern;
+
 function sys_clock_sub (               {subtract one clock value from another}
   in      clock_start: sys_clock_t;    {starting clock value, may be absolute}
   in      clock_delta: sys_clock_t)    {time to subtract, absolute or relative}

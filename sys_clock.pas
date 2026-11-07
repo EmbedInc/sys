@@ -9,12 +9,13 @@ define sys_clock_from_fp_abs;
 define sys_clock_from_fp_rel;
 define sys_clock_sub;
 define sys_clock_to_fp2;
+define sys_clock_hours_west;
 %include 'sys2.ins.pas';
 
 const
   mask = 16#3FFFFFFF;                  {mask for valid bits in LOW/SEC/HIGH fields}
 {
-***************************************************
+********************************************************************************
 *
 *   Local subroutine SEC_CLOCK (S, HIGH, SEC, LOW)
 *
@@ -65,7 +66,7 @@ begin
     end;
   end;
 {
-***************************************************
+********************************************************************************
 *
 *   Function SYS_CLOCK_ADD (CLOCK1, CLOCK2)
 *
@@ -106,7 +107,7 @@ begin
     (clock1.high + clock2.high + c) & mask;
   end;
 {
-***************************************************
+********************************************************************************
 *
 *   Function SYS_CLOCK_COMPARE (CLOCK1, CLOCK2)
 *
@@ -171,7 +172,7 @@ begin
     ;
   end;
 {
-***************************************************
+********************************************************************************
 *
 *   Function SYS_CLOCK_FROM_FP_ABS (SEC)
 *
@@ -196,7 +197,7 @@ begin
   sys_clock_from_fp_abs.rel := false;
   end;
 {
-***************************************************
+********************************************************************************
 *
 *   Function SYS_CLOCK_FROM_FP_REL (SEC)
 *
@@ -220,7 +221,7 @@ begin
   sys_clock_from_fp_rel.rel := true;
   end;
 {
-***************************************************
+********************************************************************************
 *
 *   Function SYS_CLOCK_SUB (CLOCK_START, CLOCK_DELTA)
 *
@@ -279,7 +280,7 @@ begin
     (clock_start.high + ~clock_delta.high + c);
   end;
 {
-***************************************************
+********************************************************************************
 *
 *   Function SYS_CLOCK_TO_FP2 (CLOCK)
 *
@@ -306,4 +307,44 @@ begin
         );
       end
     ;
+  end;
+{
+********************************************************************************
+*
+*   Function SYS_CLOCK_HOURS_WEST (CLOCK, TZONE, HOURS_WEST, DAYSAVE)
+*
+*   Returns the hours west of CUT for the specific time in the indicated time
+*   zone.  TZONE is the time zone ID.  HOURS_WEST must be specified when TZONE
+*   is OTHER, not one of the recognized time zones.  HOURS_WEST must be the
+*   normal hours west of CUT for the time zone, without daylight savings time
+*   applied.  DAYSAVE is the daylight savings time strategy for the target time
+*   zone.
+*
+*   The function returns the hours west of the particular time zone at the CUT
+*   time of CLOCK.  Daylight savings time is taken into account.
+*
+*   For example, if TZONE is the Eastern time zone in the continental USA, then
+*   the function will return 5 when CLOCK is in January when daylight savings
+*   time is not in effect.  The function will return 4 in July when daylight
+*   savings time is in effect.
+}
+function sys_clock_hours_west (        {find hours west of CUT}
+  in      clock: sys_clock_t;          {absolute time to find hours west of}
+  in      tzone: sys_tzone_k_t;        {time zone ID}
+  in      hours_west: real;            {for OTHER tz, hours west of CUT without DST}
+  in      daysave: sys_daysave_k_t)    {daylight savings time strategy}
+  :real;                               {hours west of CUT for the specific time and zone}
+  val_param;
+
+var
+  date: sys_date_t;                    {expanded date/time}
+
+begin
+  sys_clock_to_date (                  {convert to local time}
+    clock,                             {CUT time to convert to local}
+    tzone, hours_west, daysave,        {info for time zone to convert into}
+    date);                             {returned expaneded date/time}
+
+  sys_clock_hours_west :=              {return hours west of CUT for this time}
+    sys_date_hours_west (date);
   end;
